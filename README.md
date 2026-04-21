@@ -27,7 +27,7 @@ A sleek, dark-themed **focus web app** designed for deep work, built with simpli
 
 * 🎥 **Aesthetic Background**
 
-  * Fullscreen video background
+  * Fullscreen video background ( soon )
   * Gradient fallback mode
   * Adjustable blur/dim effect
 
@@ -57,12 +57,10 @@ A sleek, dark-themed **focus web app** designed for deep work, built with simpli
 ## 📂 Project Structure
 
 ```bash
-focusflow/
+flux/
 │── index.html
 │── style.css
 │── script.js
-│── assets/
-│   ├── background.mp4
 ```
 
 ---
@@ -71,7 +69,7 @@ focusflow/
 
 ```bash
 git clone https://github.com/dankakshat/fux.git
-cd focusflow
+cd flux
 open index.html
 ```
 
