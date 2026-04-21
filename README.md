@@ -1,4 +1,4 @@
-# 🌑 FocusFlow — Minimalist Deep Work App
+# 🌑 Flux — Minimalist Deep Work App
 
 A sleek, dark-themed **focus web app** designed for deep work, built with simplicity and aesthetics in mind.
 
