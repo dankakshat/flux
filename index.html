@@ -11,7 +11,6 @@
 </head>
 <body>
 
-  <!-- Loading Screen -->
   <div id="loader" class="loader">
     <div class="loader-inner">
       <span class="loader-word">flux</span>
@@ -19,18 +18,14 @@
     </div>
   </div>
 
-  <!-- Background Layer -->
   <div class="bg-layer" id="bgLayer">
     <video id="bgVideo" class="bg-video" autoplay muted loop playsinline>
-      <!-- Fallback: gradient shown when no video -->
     </video>
     <div class="bg-overlay" id="bgOverlay"></div>
   </div>
 
-  <!-- Main App -->
   <div class="app" id="app">
 
-    <!-- Header -->
     <header class="header" id="header">
       <div class="header-left">
         <span class="logo">flux</span>
@@ -51,21 +46,21 @@
       </div>
     </header>
 
-    <!-- Main Content -->
+    
     <main class="main">
 
-      <!-- ─── TIMER PANEL ─── -->
+     
       <section class="panel active" id="panel-timer">
         <div class="timer-wrap">
 
-          <!-- Mode Tabs -->
+         
           <div class="mode-tabs">
             <button class="mode-tab active" data-mode="work">Focus</button>
             <button class="mode-tab" data-mode="short">Short Break</button>
             <button class="mode-tab" data-mode="long">Long Break</button>
           </div>
 
-          <!-- Circular Timer -->
+          
           <div class="timer-ring-container" id="timerRingContainer">
             <svg class="timer-ring" viewBox="0 0 280 280" aria-hidden="true">
               <defs>
@@ -74,9 +69,9 @@
                   <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
                 </filter>
               </defs>
-              <!-- Track -->
+              
               <circle class="ring-track" cx="140" cy="140" r="120" />
-              <!-- Progress -->
+              
               <circle class="ring-progress" id="ringProgress" cx="140" cy="140" r="120"
                 stroke-dasharray="753.98"
                 stroke-dashoffset="0"
@@ -89,7 +84,7 @@
             </div>
           </div>
 
-          <!-- Controls -->
+          
           <div class="timer-controls">
             <button class="ctrl-btn ctrl-reset" id="resetBtn" aria-label="Reset">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
@@ -103,12 +98,12 @@
             </button>
           </div>
 
-          <!-- Keyboard hint -->
+          
           <p class="keyboard-hint"><kbd>Space</kbd> to start/pause &nbsp;·&nbsp; <kbd>F</kbd> focus mode</p>
         </div>
       </section>
 
-      <!-- ─── TASKS PANEL ─── -->
+      
       <section class="panel" id="panel-tasks">
         <div class="tasks-wrap glass-panel">
           <div class="tasks-header">
@@ -131,7 +126,7 @@
           </div>
 
           <ul class="task-list" id="taskList" role="list">
-            <!-- Tasks injected by JS -->
+            
           </ul>
 
           <div class="tasks-footer">
@@ -140,7 +135,7 @@
         </div>
       </section>
 
-      <!-- ─── STATS PANEL ─── -->
+      
       <section class="panel" id="panel-stats">
         <div class="stats-wrap">
           <div class="stats-grid">
@@ -165,7 +160,7 @@
           <div class="streak-bar glass-panel">
             <h3 class="streak-title">This Week</h3>
             <div class="week-grid" id="weekGrid">
-              <!-- 7 day bubbles injected by JS -->
+              
             </div>
           </div>
         </div>
@@ -173,7 +168,7 @@
 
     </main>
 
-    <!-- Footer / Background Controls -->
+    
     <footer class="footer" id="footer">
       <div class="bg-controls">
         <span class="bg-label">background</span>
@@ -189,9 +184,9 @@
       </div>
     </footer>
 
-  </div><!-- /app -->
+  </div>
 
-  <!-- ─── SETTINGS MODAL ─── -->
+  
   <div class="modal-backdrop hidden" id="settingsBackdrop">
     <div class="modal glass-panel" role="dialog" aria-modal="true" aria-label="Settings">
       <div class="modal-header">
@@ -238,7 +233,7 @@
     </div>
   </div>
 
-  <!-- Focus Mode Exit Hint -->
+ 
   <div class="focus-hint hidden" id="focusHint">Press <kbd>F</kbd> or <kbd>Esc</kbd> to exit focus mode</div>
 
   <script src="script.js"></script>
