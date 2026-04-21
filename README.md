@@ -8,7 +8,7 @@ A sleek, dark-themed **focus web app** designed for deep work, built with simpli
 
 ## 🚀 Live Demo
 
-👉 [View Live Project](https://dankakshat.github.io/focusflow)
+👉 [View Live Project](https://dankakshat.github.io/flux)
 
 ---
 
@@ -70,7 +70,7 @@ focusflow/
 ## ⚙️ How to Run Locally
 
 ```bash
-git clone https://github.com/dankakshat/focusflow.git
+git clone https://github.com/dankakshat/fux.git
 cd focusflow
 open index.html
 ```
@@ -90,7 +90,7 @@ open index.html
 Your app will be live at:
 
 ```
-https://dankakshat.github.io/focusflow
+https://dankakshat.github.io/flux
 ```
 
 ---
