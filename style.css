@@ -1,12 +1,6 @@
-/* ═══════════════════════════════════════════════════════
-   FLUX — Deep Focus App
-   Design: Obsidian + Lunar aesthetic
-   Fonts: DM Serif Display / DM Mono / DM Sans
-═══════════════════════════════════════════════════════ */
 
-/* ── CSS Variables ── */
 :root {
-  /* Colors */
+  
   --bg:           #080808;
   --surface:      #111111;
   --surface-2:    #181818;
@@ -17,21 +11,21 @@
   --text-secondary: rgba(240,237,232,0.5);
   --text-tertiary:  rgba(240,237,232,0.28);
 
-  --accent:       #c8b99a;          /* warm parchment gold */
+  --accent:       #c8b99a;          
   --accent-glow:  rgba(200,185,154,0.35);
   --accent-ring:  rgba(200,185,154,0.18);
 
-  --break-accent: #8fb3a8;          /* muted sage for breaks */
+  --break-accent: #8fb3a8;          
 
   --danger:       rgba(220, 100, 80, 0.8);
   --success:      rgba(120, 190, 140, 0.9);
 
-  /* Glass */
+  
   --glass-bg:     rgba(255,255,255,0.035);
   --glass-border: rgba(255,255,255,0.07);
   --glass-blur:   12px;
 
-  /* Spacing */
+  
   --gap-xs:  4px;
   --gap-sm:  8px;
   --gap-md:  16px;
@@ -39,22 +33,22 @@
   --gap-xl:  40px;
   --gap-2xl: 64px;
 
-  /* Radii */
+  
   --r-sm:  8px;
   --r-md:  14px;
   --r-lg:  22px;
   --r-xl:  32px;
 
-  /* Transitions */
+  
   --t-fast:  150ms ease;
   --t-med:   280ms cubic-bezier(0.4,0,0.2,1);
   --t-slow:  500ms cubic-bezier(0.4,0,0.2,1);
 
-  /* Ring */
+  
   --ring-circumference: 753.98px;
 }
 
-/* ── Reset & Base ── */
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html { font-size: 16px; scroll-behavior: smooth; }
@@ -69,7 +63,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── Loading Screen ── */
+
 .loader {
   position: fixed;
   inset: 0;
@@ -116,7 +110,7 @@ body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Background Layer ── */
+
 .bg-layer {
   position: fixed;
   inset: 0;
@@ -141,7 +135,7 @@ body {
   transition: background 0.4s ease, backdrop-filter 0.4s ease;
 }
 
-/* Gradient fallback mode */
+
 .bg-layer.gradient-mode .bg-video { opacity: 0 !important; }
 .bg-layer.gradient-mode .bg-overlay {
   background: linear-gradient(
@@ -153,7 +147,7 @@ body {
   );
 }
 
-/* ── App Shell ── */
+
 .app {
   position: relative;
   z-index: 1;
@@ -165,7 +159,7 @@ body {
 }
 .app.visible { opacity: 1; }
 
-/* ── Header ── */
+
 .header {
   display: flex;
   align-items: center;
@@ -252,7 +246,7 @@ body {
   background: rgba(255,255,255,0.05);
 }
 
-/* ── Main ── */
+
 .main {
   flex: 1;
   display: flex;
@@ -262,7 +256,7 @@ body {
   position: relative;
 }
 
-/* ── Panels ── */
+
 .panel {
   width: 100%;
   max-width: 560px;
@@ -276,7 +270,7 @@ body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Glass Panel ── */
+
 .glass-panel {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
@@ -284,9 +278,7 @@ body {
   border-radius: var(--r-lg);
 }
 
-/* ══════════════════════════════════════
-   TIMER
-══════════════════════════════════════ */
+
 .timer-wrap {
   display: flex;
   flex-direction: column;
@@ -294,7 +286,7 @@ body {
   gap: var(--gap-lg);
 }
 
-/* Mode Tabs */
+
 .mode-tabs {
   display: flex;
   gap: var(--gap-xs);
@@ -323,7 +315,7 @@ body {
   color: var(--text-primary);
 }
 
-/* Ring */
+
 .timer-ring-container {
   position: relative;
   width: 280px;
@@ -353,7 +345,7 @@ body {
 
 .ring-progress.break-mode { stroke: var(--break-accent); }
 
-/* Breathing animation when running */
+
 .timer-ring-container.running .ring-progress {
   animation: ringBreath 4s ease-in-out infinite;
 }
@@ -660,9 +652,7 @@ kbd {
 }
 .ghost-btn:hover { color: var(--text-secondary); }
 
-/* ══════════════════════════════════════
-   STATS
-══════════════════════════════════════ */
+
 .stats-wrap {
   display: flex;
   flex-direction: column;
