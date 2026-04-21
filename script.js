@@ -1,40 +1,19 @@
-/**
- * FLUX — Deep Focus App
- * script.js — Modular vanilla JS
- *
- * Modules:
- *  1. App Init & Loader
- *  2. State Management
- *  3. Timer Engine
- *  4. Ring Renderer
- *  5. Task Manager
- *  6. Stats Engine
- *  7. Settings Modal
- *  8. Background Controller
- *  9. Focus Mode
- * 10. Sound Engine
- * 11. Keyboard Shortcuts
- * 12. Toast Notifications
- * 13. Mobile Nav
- */
+
 
 'use strict';
 
-/* ═══════════════════════════════════════
-   1. APP STATE
-═══════════════════════════════════════ */
 const STATE = {
-  // Timer state
+ 
   timer: {
     running:       false,
-    mode:          'work',     // 'work' | 'short' | 'long'
+    mode:          'work',     
     secondsLeft:   25 * 60,
     totalSeconds:  25 * 60,
     sessionCount:  0,
     intervalId:    null,
   },
 
-  // Settings (loaded from localStorage)
+  
   settings: {
     focusDuration:    25,
     shortBreak:        5,
@@ -44,28 +23,26 @@ const STATE = {
     autoBreak:      false,
   },
 
-  // Stats (persisted per-day)
+ 
   stats: {
     sessionsToday:  0,
     minutesToday:   0,
     tasksCompleted: 0,
     streak:         0,
     lastActiveDate: null,
-    weekActivity:   {}, // { 'YYYY-MM-DD': sessions }
+    weekActivity:   {}, 
   },
 
-  // UI state
+  
   ui: {
     focusMode:    false,
-    bgMode:       'gradient', // 'video' | 'gradient'
+    bgMode:       'gradient', 
     dimLevel:     40,
     activePanel:  'timer',
   }
 };
 
-/* ═══════════════════════════════════════
-   2. PERSISTENCE HELPERS
-═══════════════════════════════════════ */
+
 const KEYS = {
   settings: 'flux_settings',
   tasks:    'flux_tasks',
@@ -129,11 +106,9 @@ function getDateStr(offset = 0) {
   return d.toISOString().slice(0, 10);
 }
 
-/* ═══════════════════════════════════════
-   3. TIMER ENGINE
-═══════════════════════════════════════ */
+
 const Timer = {
-  /** Initialise duration from settings + mode */
+ 
   init(mode) {
     clearInterval(STATE.timer.intervalId);
     STATE.timer.running      = false;
@@ -141,7 +116,7 @@ const Timer = {
     STATE.timer.secondsLeft  = Timer.durationFor(mode) * 60;
     STATE.timer.totalSeconds = STATE.timer.secondsLeft;
     Timer.updateUI();
-    Ring.render(1); // Full ring on init
+    Ring.render(1); 
     Buttons.setPlayIcon(false);
     PlayBtn.setBreakMode(mode !== 'work');
   },
@@ -199,7 +174,7 @@ const Timer = {
     Buttons.setPlayIcon(false);
 
     if (STATE.timer.mode === 'work') {
-      // Record completed session
+      
       STATE.timer.sessionCount++;
       STATE.stats.sessionsToday++;
       STATE.stats.minutesToday += STATE.settings.focusDuration;
@@ -215,7 +190,7 @@ const Timer = {
         showToast('🎉 Focus session complete!');
       }
 
-      // Determine next break
+      
       const isLong = STATE.timer.sessionCount % STATE.settings.longBreakAfter === 0;
       const nextMode = isLong ? 'long' : 'short';
 
@@ -229,7 +204,7 @@ const Timer = {
       }
 
     } else {
-      // Break ended → back to work
+      
       if (!manual) {
         Sound.playBreakEnd();
         showToast('Break over — back to focus!');
@@ -241,7 +216,7 @@ const Timer = {
       }
     }
 
-    // Update session label
+    
     document.getElementById('timerSession').textContent = `Session ${STATE.timer.sessionCount + 1}`;
   },
 
@@ -253,9 +228,7 @@ const Timer = {
   }
 };
 
-/* ═══════════════════════════════════════
-   4. RING RENDERER
-═══════════════════════════════════════ */
+
 const Ring = {
   circumference: 753.98,
 
@@ -265,9 +238,7 @@ const Ring = {
   }
 };
 
-/* ═══════════════════════════════════════
-   5. PLAY BUTTON HELPERS
-═══════════════════════════════════════ */
+
 const Buttons = {
   setPlayIcon(playing) {
     const btn = document.getElementById('startBtn');
@@ -301,16 +272,16 @@ const PlayBtn = {
   }
 };
 
-/** Switch mode tab & re-init timer */
+
 function switchMode(mode, silent = false) {
   STATE.timer.mode = mode;
 
-  // Update tab UI
+  
   document.querySelectorAll('.mode-tab').forEach(t => {
     t.classList.toggle('active', t.dataset.mode === mode);
   });
 
-  // Update label
+  
   const labels = { work: 'FOCUS', short: 'SHORT BREAK', long: 'LONG BREAK' };
   document.getElementById('timerLabel').textContent = labels[mode] || 'FOCUS';
 
@@ -319,9 +290,6 @@ function switchMode(mode, silent = false) {
   if (!silent) Ring.render(1);
 }
 
-/* ═══════════════════════════════════════
-   6. TASK MANAGER
-═══════════════════════════════════════ */
 const Tasks = {
   items: [],
 
@@ -389,7 +357,7 @@ const Tasks = {
       return;
     }
 
-    // Sort: undone first, done last
+  
     const sorted = [...this.items].sort((a, b) => a.done - b.done);
 
     sorted.forEach(task => {
@@ -418,9 +386,7 @@ function escapeHtml(str) {
   return d.innerHTML;
 }
 
-/* ═══════════════════════════════════════
-   7. STATS ENGINE
-═══════════════════════════════════════ */
+
 const Stats = {
   render() {
     document.getElementById('statSessions').textContent = STATE.stats.sessionsToday;
@@ -459,12 +425,10 @@ const Stats = {
   }
 };
 
-/* ═══════════════════════════════════════
-   8. SETTINGS MODAL
-═══════════════════════════════════════ */
+
 const SettingsModal = {
   open() {
-    // Populate fields
+    
     document.getElementById('setFocus').value         = STATE.settings.focusDuration;
     document.getElementById('setShortBreak').value    = STATE.settings.shortBreak;
     document.getElementById('setLongBreak').value     = STATE.settings.longBreak;
@@ -488,22 +452,19 @@ const SettingsModal = {
     STATE.settings.autoBreak        = document.getElementById('setAutoBreak').checked;
     saveSettings();
     this.close();
-    // Re-init current mode with new durations
+    
     if (!STATE.timer.running) switchMode(STATE.timer.mode);
     showToast('Settings saved');
   }
 };
 
-/* ═══════════════════════════════════════
-   9. BACKGROUND CONTROLLER
-═══════════════════════════════════════ */
+
 const Background = {
   init() {
     const video   = document.getElementById('bgVideo');
     const bgLayer = document.getElementById('bgLayer');
 
-    // Attempt to use a free ambient video via direct URL
-    // Using a reliable Unsplash/Pexels embed source
+
     const videoSources = [
       'https://videos.pexels.com/video-files/3163534/3163534-uhd_2560_1440_25fps.mp4',
     ];
@@ -513,14 +474,14 @@ const Background = {
     });
 
     video.addEventListener('error', () => {
-      // Silently fall back to gradient
+      
       this.setMode('gradient');
     });
 
-    // Default to gradient (video requires external source)
+   
     this.setMode('gradient');
 
-    // Dim slider
+    
     const slider = document.getElementById('dimSlider');
     slider.value = STATE.ui.dimLevel;
     slider.addEventListener('input', e => {
@@ -555,9 +516,7 @@ const Background = {
   }
 };
 
-/* ═══════════════════════════════════════
-   10. FOCUS MODE
-═══════════════════════════════════════ */
+
 const FocusMode = {
   hint: null,
   hintTimeout: null,
@@ -596,9 +555,7 @@ const FocusMode = {
   }
 };
 
-/* ═══════════════════════════════════════
-   11. SOUND ENGINE
-═══════════════════════════════════════ */
+
 const Sound = {
   ctx: null,
 
@@ -625,7 +582,7 @@ const Sound = {
   },
 
   playDone() {
-    // Ascending chime — G4, B4, D5
+    
     this._tone(392, 0.3);
     setTimeout(() => this._tone(494, 0.3), 200);
     setTimeout(() => this._tone(587, 0.6), 400);
@@ -642,9 +599,6 @@ const Sound = {
   }
 };
 
-/* ═══════════════════════════════════════
-   12. TOAST NOTIFICATIONS
-═══════════════════════════════════════ */
 let toastEl  = null;
 let toastTid = null;
 
@@ -660,9 +614,7 @@ function showToast(message, duration = 2500) {
   toastTid = setTimeout(() => toastEl.classList.remove('show'), duration);
 }
 
-/* ═══════════════════════════════════════
-   13. PANEL NAVIGATION
-═══════════════════════════════════════ */
+
 function switchPanel(name) {
   STATE.ui.activePanel = name;
 
@@ -680,9 +632,7 @@ function switchPanel(name) {
   }
 }
 
-/* ═══════════════════════════════════════
-   14. MOBILE NAV INJECTION
-═══════════════════════════════════════ */
+
 function buildMobileNav() {
   const nav = document.createElement('nav');
   nav.className = 'mobile-nav';
@@ -707,9 +657,7 @@ function buildMobileNav() {
   });
 }
 
-/* ═══════════════════════════════════════
-   15. KEYBOARD SHORTCUTS
-═══════════════════════════════════════ */
+
 function initKeyboard() {
   document.addEventListener('keydown', e => {
     // Don't intercept when typing in inputs
@@ -751,16 +699,14 @@ function initKeyboard() {
   });
 }
 
-/* ═══════════════════════════════════════
-   16. EVENT LISTENERS
-═══════════════════════════════════════ */
+
 function initEventListeners() {
-  // Timer controls
+ 
   document.getElementById('startBtn').addEventListener('click', () => Timer.toggle());
   document.getElementById('resetBtn').addEventListener('click', () => Timer.reset());
   document.getElementById('skipBtn').addEventListener('click',  () => Timer.skip());
 
-  // Mode tabs
+  
   document.querySelectorAll('.mode-tab').forEach(tab => {
     tab.addEventListener('click', () => {
       if (!STATE.timer.running) switchMode(tab.dataset.mode);
@@ -768,12 +714,12 @@ function initEventListeners() {
     });
   });
 
-  // Nav buttons (header)
+ 
   document.querySelectorAll('.nav-btn').forEach(btn => {
     btn.addEventListener('click', () => switchPanel(btn.dataset.panel));
   });
 
-  // Task input
+  
   document.getElementById('taskAddBtn').addEventListener('click', addTaskFromInput);
   document.getElementById('taskInput').addEventListener('keydown', e => {
     if (e.key === 'Enter') addTaskFromInput();
@@ -783,7 +729,7 @@ function initEventListeners() {
     showToast('Cleared completed tasks');
   });
 
-  // Settings
+  
   document.getElementById('settingsBtn').addEventListener('click',      () => SettingsModal.open());
   document.getElementById('closeSettingsBtn').addEventListener('click', () => SettingsModal.close());
   document.getElementById('saveSettingsBtn').addEventListener('click',  () => SettingsModal.save());
@@ -791,10 +737,10 @@ function initEventListeners() {
     if (e.target === document.getElementById('settingsBackdrop')) SettingsModal.close();
   });
 
-  // Focus mode
+  
   document.getElementById('focusModeBtn').addEventListener('click', () => FocusMode.toggle());
 
-  // Background
+ 
   document.getElementById('bgVideoBtn').addEventListener('click',    () => Background.setMode('video'));
   document.getElementById('bgGradientBtn').addEventListener('click', () => Background.setMode('gradient'));
 }
@@ -808,16 +754,14 @@ function addTaskFromInput() {
   input.focus();
 }
 
-/* ═══════════════════════════════════════
-   17. LOADER + APP INIT
-═══════════════════════════════════════ */
+
 function initApp() {
-  // Load persisted data
+  
   loadSettings();
   loadStats();
   Tasks.load();
 
-  // Init subsystems
+  
   Background.init();
   Timer.init('work');
   Stats.render();
@@ -825,12 +769,12 @@ function initApp() {
   initEventListeners();
   initKeyboard();
 
-  // Hide loader, reveal app
+  
   setTimeout(() => {
     document.getElementById('loader').classList.add('hidden');
     document.getElementById('app').classList.add('visible');
   }, 2000);
 }
 
-// Kick off when DOM is ready
+
 document.addEventListener('DOMContentLoaded', initApp);
